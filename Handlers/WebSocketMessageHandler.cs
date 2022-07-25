@@ -22,7 +22,7 @@ namespace ServerChatWebSocket5.Handlers
         public override async Task Recieve(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
         {
             var socketId = Connections.GetId(socket);
-            var message = $"{socketId}  said: {Encoding.UTF8.GetString(buffer,0,result.Count)}";
+            string message = $"{socketId}  said: {Encoding.UTF8.GetString(buffer,0,result.Count)}";
             await SendMessageToAll(message);
         }
     }

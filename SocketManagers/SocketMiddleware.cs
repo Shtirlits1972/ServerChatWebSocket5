@@ -31,7 +31,14 @@ namespace ServerChatWebSocket5.SocketManagers
             {
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
-                    await Handler.Recieve(socket, result, buffer);
+                    try
+                    {
+                        await Handler.Recieve(socket, result, buffer);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
                 else if(result.MessageType == WebSocketMessageType.Close)
                 {
@@ -42,11 +49,24 @@ namespace ServerChatWebSocket5.SocketManagers
 
         private async Task Recieve(WebSocket webSocket, Action<WebSocketReceiveResult, byte[]> messageHandler)
         {
-            var buffer = new byte[1024 * 4];
+            //  var buffer = new byte[1024 * 4];
+            var buffer = new byte[4096 * 8];
             while (webSocket.State == WebSocketState.Open)
             {
-                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                messageHandler(result,buffer);
+                try
+                {
+                    int a = 0;
+
+                    var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                    messageHandler(result, buffer);
+
+
+                    int y = 0;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }

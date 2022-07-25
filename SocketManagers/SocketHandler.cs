@@ -31,9 +31,21 @@ namespace ServerChatWebSocket5.SocketManagers
             {
                 return;
             }
+            int y = 0;
 
-            await socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(message), 0, message.Length), WebSocketMessageType.Text,true,
-                CancellationToken.None);
+
+            try
+            {
+                //   ASCII
+                //await socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(message), 0, message.Length), WebSocketMessageType.Text, true,
+                //    CancellationToken.None);
+
+                await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message)), WebSocketMessageType.Text, true,  CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public async Task SendMessage(string id, string message)
