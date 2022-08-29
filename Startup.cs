@@ -26,7 +26,7 @@ namespace ServerChatWebSocket5
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddWebSocketManager();
+            services.AddWebSocketManager();//  !!!!!!!!!!!!!!
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +41,10 @@ namespace ServerChatWebSocket5
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            //-----------------------------------------------------------
             app.UseWebSockets();
             app.MapSockets("/ws", serviceProvider.GetService<WebSocketMessageHandler>());
-
+            //-----------------------------------------------------------
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
